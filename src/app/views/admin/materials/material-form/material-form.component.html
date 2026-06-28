@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>{{ esEdicion ? 'Editar Material' : 'Registrar Nuevo Material' }}</h2>
+
+<mat-dialog-content class="form-container">
+  <p style="color: #64748b; margin-bottom: 20px;">Ingresa los detalles del nuevo insumo para el inventario.</p>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Nombre del Material</mat-label>
+    <input matInput [(ngModel)]="nuevoMaterial.nombre" placeholder="Ej: Cuero Italiano Negro" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Precio / Costo Unitario</mat-label>
+    <input matInput type="number" [(ngModel)]="nuevoMaterial.precioUnitario" placeholder="0.00" required>
+    <span matPrefix>$&nbsp;</span>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="actions-container">
+  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button mat-flat-button color="primary" (click)="guardar()" [disabled]="!nuevoMaterial.nombre || nuevoMaterial.precioUnitario <= 0">
+    Guardar en Inventario
+  </button>
+</mat-dialog-actions>

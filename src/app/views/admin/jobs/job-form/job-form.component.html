@@ -1,0 +1,49 @@
+<h2 mat-dialog-title>{{ esEdicion ? 'Modificar Orden de Trabajo' : 'Registrar Nueva Orden de Trabajo' }}</h2>
+
+<mat-dialog-content class="form-container" style="min-width: 500px; padding-top: 10px;">
+  <p style="color: #64748b; margin-bottom: 20px;">Ingresa los datos del cliente y los detalles de la obra/restauración.</p>
+
+  <mat-form-field appearance="outline" style="width: 100%;">
+    <mat-label>Nombre del Cliente</mat-label>
+    <input matInput [(ngModel)]="nuevoTrabajo.nombreCliente" placeholder="Ej: Carlos Mendoza" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="width: 100%;">
+    <mat-label>Descripción del Trabajo</mat-label>
+    <textarea matInput [(ngModel)]="nuevoTrabajo.descripcion" placeholder="Ej: Tapizado de asientos" rows="3" required></textarea>
+  </mat-form-field>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 16px;">
+    
+    <mat-form-field appearance="outline">
+      <mat-label>Presupuesto</mat-label>
+      <input matInput type="number" [(ngModel)]="nuevoTrabajo.presupuestoTotal" placeholder="0.00" required>
+      <span matPrefix>$&nbsp;</span>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Estado Inicial</mat-label>
+      <mat-select [(ngModel)]="nuevoTrabajo.estado">
+        <mat-option value="pendiente">Pendiente</mat-option>
+        <mat-option value="en_proceso">En Proceso</mat-option>
+        <mat-option value="terminado">Terminado</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Fecha de Entrega</mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="nuevoTrabajo.fechaEntrega" placeholder="Selecciona" required readonly>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" style="padding: 16px 24px;">
+  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button mat-flat-button color="primary" (click)="guardar()" 
+          [disabled]="!nuevoTrabajo.nombreCliente || !nuevoTrabajo.descripcion || !nuevoTrabajo.fechaEntrega">
+    Crear Orden
+  </button>
+</mat-dialog-actions>

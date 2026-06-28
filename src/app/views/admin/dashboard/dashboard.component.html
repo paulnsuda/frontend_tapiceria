@@ -1,2 +1,62 @@
-<h1>¡Bienvenido al Panel de Control!</h1>
-<p>Aquí pondremos las estadísticas de la tapicería.</p>
+<!-- Barra de Navegación Superior -->
+<mat-toolbar color="primary" class="navbar-corporativa">
+  <span class="logo-text">GATO SIGNATURE STUDIO</span>
+  <span class="spacer"></span>
+  <span class="user-greeting">Hola, Administrador</span>
+  <button mat-button class="btn-logout">Cerrar Sesión</button>
+</mat-toolbar>
+
+<!-- Contenedor Principal con fondo gris -->
+<div class="dashboard-layout">
+  
+  <div class="header-section">
+    <h1 class="page-title">Resumen del Negocio</h1>
+    <p class="page-subtitle">Monitorea tus ingresos, trabajos y existencias en tiempo real.</p>
+  </div>
+
+  <!-- Tarjetas de Resumen (KPIs) -->
+  <div class="kpi-grid">
+    <mat-card class="kpi-card">
+      <mat-card-content>
+        <p class="kpi-title">Trabajos Activos</p>
+        <h2 class="kpi-value">12</h2>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="kpi-card">
+      <mat-card-content>
+        <p class="kpi-title">Ingresos del Mes</p>
+        <h2 class="kpi-value positive">$ 3,450.00</h2>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="kpi-card">
+      <mat-card-content>
+        <p class="kpi-title">Materiales Bajos en Stock</p>
+        <h2 class="kpi-value warning">3</h2>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Contenedor de Pestañas (Tabs) -->
+  <div class="module-section">
+    <mat-tab-group animationDuration="500ms" class="custom-tabs">
+      
+      <!-- Pestaña 1: Trabajos (Proformas) -->
+      <mat-tab label="Gestión de Trabajos">
+        <div class="tab-content">
+          <app-jobs></app-jobs>
+        </div>
+      </mat-tab>
+
+      <!-- Pestaña 2: Inventario -->
+      <mat-tab label="Inventario de Materiales">
+        <div class="tab-content">
+          <app-materials></app-materials>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+  </div>
+
+</div>

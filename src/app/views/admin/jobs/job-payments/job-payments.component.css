@@ -1,0 +1,29 @@
+.payments-container { padding-top: 10px; min-width: 550px; }
+
+/* Tarjetas de Resumen */
+.financial-summary { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.summary-box { padding: 16px; border-radius: 8px; text-align: center; background: #f8fafc; border: 1px solid #e2e8f0; }
+.summary-box span { font-size: 0.75rem; color: #64748b; text-transform: uppercase; font-weight: 600; }
+.summary-box h3 { margin: 8px 0 0 0; font-size: 1.5rem; color: #0f172a; }
+
+/* Colores de Deuda vs Pagado */
+.debt { background: #fef2f2; border-color: #fecaca; }
+.debt h3 { color: #ef4444; }
+.text-green { color: #10b981 !important; }
+.success-text { color: #10b981; font-weight: 600; }
+
+/* Sección de Ingreso de Dinero */
+.new-payment-section { margin-bottom: 24px; padding: 16px; background: #f1f5f9; border-radius: 8px; }
+.new-payment-section h3 { margin-top: 0; margin-bottom: 15px; font-size: 1rem; color: #334155; }
+.payment-form { display: flex; gap: 16px; align-items: flex-start; }
+.monto-input { flex-grow: 1; }
+.btn-abonar { height: 50px; border-radius: 4px; margin-top: 3px; font-weight: bold;}
+
+/* Alerta de Completado */
+.pagado-alert { display: flex; align-items: center; gap: 8px; padding: 16px; background: #d1fae5; color: #065f46; border-radius: 8px; margin-bottom: 24px; font-weight: 500; }
+.pagado-alert p { margin: 0; }
+
+/* Tabla */
+.tabla-pagos { width: 100%; border: 1px solid #e2e8f0; border-radius: 8px; box-shadow: none; margin-bottom: 20px;}
+.table-right { text-align: right; padding-right: 20px;}
+.empty-text { text-align: center; color: #94a3b8; font-style: italic; padding: 20px 0; }

@@ -1,0 +1,65 @@
+<h2 mat-dialog-title>Estado de Cuenta: <strong>{{ trabajo.nombreCliente }}</strong></h2>
+
+<mat-dialog-content class="payments-container">
+  
+  <div class="financial-summary">
+   <div class="summary-box budget">
+      <span>Costo Total</span> 
+      <h3>{{ trabajo.presupuestoTotal | currency }}</h3>
+    </div>
+    <div class="summary-box paid">
+      <span>Total Abonado</span>
+      <h3>{{ totalPagado | currency }}</h3>
+    </div>
+    <div class="summary-box debt">
+      <span>Saldo Pendiente</span>
+      <h3 [ngClass]="{'text-green': saldoPendiente === 0}">{{ saldoPendiente | currency }}</h3>
+    </div>
+  </div>
+
+  <div class="new-payment-section" *ngIf="saldoPendiente > 0">
+    <h3>Registrar Nuevo Abono</h3>
+    <div class="payment-form">
+      <mat-form-field appearance="outline" class="monto-input">
+        <mat-label>Monto a abonar</mat-label>
+        <input matInput type="number" [(ngModel)]="nuevoAbono.monto" placeholder="0.00">
+        <span matPrefix>$&nbsp;</span>
+      </mat-form-field>
+      
+      <button mat-flat-button color="primary" class="btn-abonar"
+              [disabled]="nuevoAbono.monto <= 0 || nuevoAbono.monto > saldoPendiente"
+              (click)="registrarAbono()">
+        Abonar
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="saldoPendiente === 0" class="pagado-alert">
+    <mat-icon>check_circle</mat-icon>
+    <p>Esta orden de trabajo está pagada en su totalidad.</p>
+  </div>
+
+  <h3>Historial de Abonos</h3>
+  <table mat-table [dataSource]="historialPagos" class="tabla-pagos" *ngIf="historialPagos.length > 0">
+    
+    <ng-container matColumnDef="fecha">
+      <th mat-header-cell *matHeaderCellDef> Fecha </th>
+      <td mat-cell *matCellDef="let pago"> {{ pago.fechaCreacion | date:'mediumDate' }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="monto">
+      <th mat-header-cell *matHeaderCellDef class="table-right"> Monto </th>
+      <td mat-cell *matCellDef="let pago" class="table-right success-text"> + {{ pago.monto | currency }} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnasAMostrar"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnasAMostrar;"></tr>
+  </table>
+  
+  <p *ngIf="historialPagos.length === 0" class="empty-text">El cliente no ha realizado ningún abono aún.</p>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cerrar()">Cerrar Ventana</button>
+</mat-dialog-actions>

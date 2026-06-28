@@ -1,0 +1,41 @@
+.corporate-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+  overflow: hidden;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  border-bottom: 1px solid #e2e8f0;
+  background-color: #ffffff;
+}
+
+.card-title { margin: 0; font-size: 1.25rem; font-weight: 700; color: #1e293b; }
+.card-subtitle { margin: 4px 0 0 0; font-size: 0.875rem; color: #64748b; }
+.btn-action { border-radius: 8px; padding: 0 20px; font-weight: 600; }
+.table-container { padding: 0 !important; }
+.tabla-completa { width: 100%; }
+
+.table-header { color: #64748b; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; background-color: #f8fafc; }
+.table-right { text-align: right; padding-right: 24px !important; }
+.value-cell { font-weight: 600; color: #0f172a; }
+.table-row-hover:hover { background-color: #f1f5f9; cursor: pointer; }
+.mensaje-vacio { padding: 40px; text-align: center; color: #94a3b8; font-size: 0.95rem; }
+
+/* --- MAGIA DE LAS PÍLDORAS (BADGES) --- */
+.badge {
+  padding: 6px 12px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Colores según el estado */
+.badge-pendiente { background-color: #fef3c7; color: #d97706; } /* Amarillo/Naranja */
+.badge-progreso { background-color: #dbeafe; color: #2563eb; } /* Azul */
+.badge-completado { background-color: #d1fae5; color: #059669; } /* Verde */
