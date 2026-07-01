@@ -21,12 +21,17 @@ export class JobsService {
     return this.http.get<any[]>(this.apiUrl, { headers: this.getHeaders() });
   }
 
-  // Crear un trabajo nuevo (lo usaremos más adelante)
+  // 🔥 NUEVO: Traer UN SOLO trabajo por su ID (Necesario para ver sus materiales)
+  getJobById(id: number) {
+    return this.http.get<any>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+  }
+
+  // Crear un trabajo nuevo
   createJob(jobData: any) {
     return this.http.post<any>(this.apiUrl, jobData, { headers: this.getHeaders() });
   }
 
-  // Actualizar un trabajo existente (Cambiar estado, presupuesto, etc.)
+  // Actualizar un trabajo existente
   updateJob(id: number, jobData: any) {
     return this.http.patch<any>(`${this.apiUrl}/${id}`, jobData, { headers: this.getHeaders() });
   }
@@ -35,5 +40,17 @@ export class JobsService {
   deleteJob(id: number) {
     return this.http.delete<any>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
   }
-  
+
+  // 🔥 NUEVO: Conectar con el backend para obtener alertas
+  getAlertasAgenda() {
+    return this.http.get<any[]>(`${this.apiUrl}/alertas/agenda`, { headers: this.getHeaders() }); 
+  }
+
+  // 🔥 NUEVO: Mandar la orden al backend para descontar stock y sumar al costo del trabajo
+  agregarMaterial(jobId: number, materialId: number, cantidadUsada: number) {
+    return this.http.post<any>(`${this.apiUrl}/${jobId}/materials`, {
+      materialId: materialId,
+      cantidadUsada: cantidadUsada
+    }, { headers: this.getHeaders() });
+  }
 }

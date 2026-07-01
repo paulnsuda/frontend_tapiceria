@@ -1,0 +1,35 @@
+<div class="card p-3">
+  <h5>Gestionar Materiales del Trabajo</h5>
+
+  <div class="row g-2 mb-4">
+    <div class="col-md-5">
+      <select class="form-select" [(ngModel)]="selectedMaterialId">
+        <option [value]="0">Selecciona un material...</option>
+        <option *ngFor="let m of availableMaterials" [value]="m.id">{{m.nombre}} (Stock: {{m.stock}})</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <input type="number" class="form-control" [(ngModel)]="cantidad" placeholder="Cantidad">
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-primary w-100" (click)="agregarMaterial()">Agregar Material</button>
+    </div>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Material</th>
+        <th>Cantidad</th>
+        <th>Costo Unit. (Histórico)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of jobMaterials">
+        <td>{{item.material.nombre}}</td>
+        <td>{{item.cantidadUsada}} {{item.material.unidadMedida}}</td>
+        <td>{{item.precioUnitarioHistorico | currency}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
