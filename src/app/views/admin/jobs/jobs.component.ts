@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
@@ -7,26 +7,25 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { JobsService } from '../../../services/jobs.service';
 
-// 1. ESTAS IMPORTACIONES SE QUEDAN (TypeScript las necesita para el Dialog)
 import { JobFormComponent } from './job-form/job-form.component';
 import { JobPaymentsComponent } from './job-payments/job-payments.component';
 
 @Component({
   selector: 'app-jobs',
   standalone: true,
-  // 2. AQUÍ ES DONDE LOS QUITAMOS (Solo dejamos los módulos de Material y CommonModule)
   imports: [CommonModule, MatTableModule, MatCardModule, MatButtonModule, MatDialogModule, MatIconModule],
   templateUrl: './jobs.component.html',
   styleUrl: './jobs.component.css'
 })
 export class JobsComponent implements OnInit {
   listaTrabajos: any[] = [];
-  // Agregamos 'acciones' al final de las columnas
-  columnasAMostrar: string[] = ['id', 'cliente', 'descripcion', 'estado', 'presupuesto', 'acciones']; 
+  // Actualizamos las columnas para incluir la placa y el costo
+  columnasAMostrar: string[] = ['id', 'cliente', 'placa', 'descripcion', 'estado', 'costo', 'acciones']; 
 
   constructor(
     private jobsService: JobsService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -35,17 +34,19 @@ export class JobsComponent implements OnInit {
 
   cargarTrabajos() {
     this.jobsService.getJobs().subscribe({
-      next: (datos) => { this.listaTrabajos = datos; },
+      next: (datos) => { 
+        this.listaTrabajos = datos; 
+        this.cdr.detectChanges(); // <-- 2. Le decimos a Angular: "Ya llegaron los datos, redibuja la tabla sin pánico"
+      },
       error: (err) => { console.error('Error al traer los trabajos', err); }
     });
   }
 
-  // Modificado para recibir un trabajo opcional en caso de edición
   abrirFormulario(trabajo?: any) {
     const dialogRef = this.dialog.open(JobFormComponent, {
       width: '520px',
       disableClose: true,
-      data: trabajo // Pasamos la orden si existe
+      data: trabajo 
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -55,9 +56,9 @@ export class JobsComponent implements OnInit {
 
   abrirPagos(trabajo: any) {
     const dialogRef = this.dialog.open(JobPaymentsComponent, {
-      width: '600px', // Un poco más ancha para mostrar el historial de pagos
+      width: '600px', 
       disableClose: true,
-      data: trabajo // Le pasamos TODA la orden de trabajo a la ventana de pagos
+      data: trabajo 
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -65,8 +66,8 @@ export class JobsComponent implements OnInit {
     });
   }
 
-  eliminarTrabajo(id: number, cliente: string) {
-    if (confirm(`¿Estás seguro de eliminar la orden de trabajo de "${cliente}"?`)) {
+  eliminarTrabajo(id: number, clienteNombre: string) {
+    if (confirm(`¿Estás seguro de eliminar la orden de trabajo de "${clienteNombre}"?`)) {
       this.jobsService.deleteJob(id).subscribe({
         next: () => {
           alert('Orden de trabajo eliminada.');

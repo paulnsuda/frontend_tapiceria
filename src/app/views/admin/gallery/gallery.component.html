@@ -1,0 +1,39 @@
+<div class="gallery-container">
+  <h2>Catálogo de Trabajos</h2>
+
+  <!-- Caja para subir una nueva foto -->
+  <mat-card class="upload-card">
+    <mat-card-content>
+      <h3>Subir nueva foto</h3>
+      
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Título de la foto</mat-label>
+          <input matInput [(ngModel)]="tituloNuevo" placeholder="Ej: Asientos en cuero">
+        </mat-form-field>
+
+        <input type="file" (change)="onFileSelected($event)" accept="image/*" class="file-input">
+      </div>
+
+      <button mat-flat-button color="primary" (click)="subirFoto()" [disabled]="subiendo">
+        <mat-icon *ngIf="!subiendo">cloud_upload</mat-icon>
+        {{ subiendo ? 'Subiendo a la nube...' : 'Subir Foto' }}
+      </button>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Grilla donde se muestran las fotos -->
+  <div class="photo-grid">
+    <mat-card class="photo-card" *ngFor="let foto of fotos">
+      <img mat-card-image [src]="foto.url" alt="Trabajo tapicería">
+      <mat-card-content>
+        <p class="foto-title">{{ foto.titulo }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="warn" (click)="eliminar(foto.id)">
+          <mat-icon>delete</mat-icon> Eliminar
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

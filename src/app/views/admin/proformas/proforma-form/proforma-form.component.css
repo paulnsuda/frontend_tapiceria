@@ -1,0 +1,157 @@
+.cotizacion-form {
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  
+  /* --- LAS DOS LÍNEAS MÁGICAS PARA EL SCROLL --- */
+  max-height: 85vh; /* Limita el alto de la ventana al 85% de tu pantalla */
+  overflow-y: auto; /* Le dice a la ventana: "Si el contenido no entra, ponle un scroll" */
+}
+
+.section-card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  margin-bottom: 25px;
+}
+
+.section-card h3 {
+  margin-top: 0;
+  color: #1e293b;
+  border-bottom: 2px solid #eab308;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.grid-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #475569;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+/* ESTILOS DE LA TABLA MAGICA */
+.header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-add {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.services-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.services-table th {
+  background-color: #f8fafc;
+  padding: 12px;
+  text-align: left;
+  border-bottom: 2px solid #cbd5e1;
+}
+
+.services-table td {
+  padding: 10px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.fw-bold { font-weight: bold; }
+
+.btn-delete {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* TOTALES */
+.totals-section {
+  margin-top: 30px;
+  width: 300px;
+  float: right;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  font-size: 1.1rem;
+}
+
+.grand-total {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #1e293b;
+  border-top: 2px solid #cbd5e1;
+  padding-top: 15px;
+}
+
+/* BOTONES FINALES */
+.actions-footer {
+  clear: both;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  padding-top: 40px;
+}
+
+.btn-primary, .btn-secondary, .btn-pdf {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.btn-primary { background-color: #3b82f6; color: white; }
+.btn-secondary { background-color: #e2e8f0; color: #475569; }
+.btn-pdf { background-color: #eab308; color: #1e293b; }
+
+/* Maquillaje para la barra de scroll */
+.cotizacion-form::-webkit-scrollbar {
+  width: 8px;
+}
+.cotizacion-form::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+.cotizacion-form::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+.cotizacion-form::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

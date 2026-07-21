@@ -52,5 +52,12 @@ export class JobsService {
       materialId: materialId,
       cantidadUsada: cantidadUsada
     }, { headers: this.getHeaders() });
+
   }
+
+// Rastreo público por placa
+  trackJobByPlaca(placa: string) {
+    return this.http.get<any>(`http://localhost:3000/track/${placa}`);
+  }
+
 }

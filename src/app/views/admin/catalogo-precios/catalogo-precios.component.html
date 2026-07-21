@@ -1,0 +1,55 @@
+<div style="padding: 20px; max-width: 900px; margin: 0 auto; font-family: Arial, sans-serif;">
+  <h2 style="color: #1e293b; margin-bottom: 5px;">Catálogo de Precios Fijos</h2>
+  <p style="color: #64748b; margin-bottom: 30px;">Agrega los servicios de tapicería que haces frecuentemente para automatizar tus cotizaciones.</p>
+
+  <!-- SECCIÓN PARA AGREGAR NUEVO PRECIO -->
+  <div style="background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 30px;">
+    <h3 style="color: #0f172a; margin-top: 0; margin-bottom: 20px; font-size: 16px;">Agregar Nuevo Trabajo</h3>
+    
+    <div style="display: flex; gap: 15px; align-items: flex-end;">
+      <div style="flex: 2;">
+        <label style="display: block; font-size: 13px; font-weight: bold; color: #475569; margin-bottom: 8px;">Nombre del Trabajo (Ej: Tapizado Asientos H1)</label>
+        <input type="text" [(ngModel)]="nuevoServicio.nombre" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 5px;" placeholder="Escribe el servicio...">
+      </div>
+      
+      <div style="flex: 1;">
+        <label style="display: block; font-size: 13px; font-weight: bold; color: #475569; margin-bottom: 8px;">Precio Oficial ($)</label>
+        <input type="number" [(ngModel)]="nuevoServicio.precioSugerido" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 5px;" placeholder="0.00">
+      </div>
+      
+      <div>
+        <button (click)="guardarPrecio()" style="background: #0f172a; color: white; border: none; padding: 12px 25px; border-radius: 5px; font-weight: bold; cursor: pointer;">
+          + Guardar Precio
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLA DE PRECIOS GUARDADOS -->
+  <div style="background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+    <h3 style="color: #0f172a; margin-top: 0; margin-bottom: 20px; font-size: 16px;">Mis Precios Guardados</h3>
+    
+    <table style="width: 100%; text-align: left; border-collapse: collapse;">
+      <thead>
+        <tr style="background-color: #f8fafc; border-bottom: 2px solid #e2e8f0;">
+          <th style="padding: 12px; color: #475569; font-size: 14px;">Servicio / Trabajo</th>
+          <th style="padding: 12px; color: #475569; font-size: 14px; width: 150px;">Precio Estándar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Esta fila se repite por cada precio que tengas guardado -->
+        <tr *ngFor="let serv of servicios" style="border-bottom: 1px solid #f1f5f9;">
+          <td style="padding: 12px; color: #334155;">{{ serv.nombre }}</td>
+          <td style="padding: 12px; font-weight: bold; color: #15803d;">${{ serv.precioSugerido }}</td>
+        </tr>
+        
+        <!-- Mensaje si la tabla está vacía -->
+        <tr *ngIf="servicios.length === 0">
+          <td colspan="2" style="padding: 30px; text-align: center; color: #94a3b8; font-style: italic;">
+            Aún no tienes precios guardados. ¡Agrega tu primer trabajo en la parte de arriba!
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

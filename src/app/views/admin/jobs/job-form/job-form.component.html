@@ -3,30 +3,40 @@
 <mat-dialog-content class="form-container" style="min-width: 500px; padding-top: 10px;">
   <p style="color: #64748b; margin-bottom: 20px;">Ingresa los datos del cliente y los detalles de la obra/restauración.</p>
 
-  <mat-form-field appearance="outline" style="width: 100%;">
-    <mat-label>Nombre del Cliente</mat-label>
-    <input matInput [(ngModel)]="nuevoTrabajo.nombreCliente" placeholder="Ej: Carlos Mendoza" required>
-  </mat-form-field>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Nombre del Cliente</mat-label>
+      <input matInput [(ngModel)]="nuevoTrabajo.clienteNombre" placeholder="Ej: Carlos Mendoza" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Placa del Vehículo</mat-label>
+      <input matInput [(ngModel)]="nuevoTrabajo.placaVehiculo" placeholder="Ej: ABC-1234" required>
+    </mat-form-field>
+  </div>
 
   <mat-form-field appearance="outline" style="width: 100%;">
     <mat-label>Descripción del Trabajo</mat-label>
-    <textarea matInput [(ngModel)]="nuevoTrabajo.descripcion" placeholder="Ej: Tapizado de asientos" rows="3" required></textarea>
+    <textarea matInput [(ngModel)]="nuevoTrabajo.descripcion" placeholder="Ej: Tapizado de asientos en cuero sintético" rows="3" required></textarea>
   </mat-form-field>
 
   <div style="display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 16px;">
     
     <mat-form-field appearance="outline">
-      <mat-label>Presupuesto</mat-label>
-      <input matInput type="number" [(ngModel)]="nuevoTrabajo.presupuestoTotal" placeholder="0.00" required>
+      <mat-label>Costo Total</mat-label>
+      <input matInput type="number" [(ngModel)]="nuevoTrabajo.costoTotal" placeholder="0.00" required>
       <span matPrefix>$&nbsp;</span>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Estado Inicial</mat-label>
       <mat-select [(ngModel)]="nuevoTrabajo.estado">
-        <mat-option value="pendiente">Pendiente</mat-option>
-        <mat-option value="en_proceso">En Proceso</mat-option>
-        <mat-option value="terminado">Terminado</mat-option>
+        <mat-option value="recepcion">Recepción</mat-option>
+        <mat-option value="desarmado">Desarmado</mat-option>
+        <mat-option value="tapizado">Tapizado</mat-option>
+        <mat-option value="armado">Armado</mat-option>
+        <mat-option value="listo">Listo</mat-option>
+        <mat-option value="entregado">Entregado</mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -42,8 +52,9 @@
 
 <mat-dialog-actions align="end" style="padding: 16px 24px;">
   <button mat-button (click)="cancelar()">Cancelar</button>
+  
   <button mat-flat-button color="primary" (click)="guardar()" 
-          [disabled]="!nuevoTrabajo.nombreCliente || !nuevoTrabajo.descripcion || !nuevoTrabajo.fechaEntrega">
-    Crear Orden
+          [disabled]="!nuevoTrabajo.clienteNombre || !nuevoTrabajo.placaVehiculo || !nuevoTrabajo.descripcion || !nuevoTrabajo.fechaEntrega">
+    {{ esEdicion ? 'Guardar Cambios' : 'Crear Orden' }}
   </button>
 </mat-dialog-actions>

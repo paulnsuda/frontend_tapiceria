@@ -1,0 +1,120 @@
+<!-- 1. BARRA DE NAVEGACIÓN PROFESIONAL -->
+<nav class="navbar">
+  <div class="nav-brand">
+    <span class="logo-accent">///</span> GATO STUDIO
+  </div>
+  <div class="nav-links">
+    <!-- Usamos (click) en lugar de href -->
+    <a (click)="irA('inicio')">Inicio</a>
+    <a (click)="irA('rastreo')">Rastrear Auto</a>
+    <a (click)="irA('nosotros')">¿Quiénes Somos?</a>
+    <a (click)="irA('servicios')">Servicios</a>
+  </div>
+  <button mat-button class="login-btn" routerLink="/login" matTooltip="Acceso Administrativo">
+    <mat-icon>admin_panel_settings</mat-icon> 
+  </button>
+</nav>
+
+<!-- 2. HERO SECTION (ENCABEZADO IMPACTANTE) -->
+<header class="hero-section" id="inicio">
+  <div class="hero-content">
+    <h1>Arte y Precisión para el Interior de tu Vehículo</h1>
+    <p>Restauración automotriz de alta gama, personalización y tapicería con materiales premium.</p>
+    <a href="#rastreo" class="btn-primary">Consultar Estado de mi Vehículo</a>
+  </div>
+</header>
+
+<!-- 3. SECCIÓN DE RASTREO (ELEVADA) -->
+<section class="tracker-section" id="rastreo">
+  <div class="tracker-container">
+    <h2>¿Tu vehículo está en nuestro taller?</h2>
+    <div class="accent-line-center"></div>
+    <p>Ingresa tu placa para conocer el estado de tu tapizado en tiempo real.</p>
+    
+    <div class="search-box">
+      <input type="text" [(ngModel)]="placaBuscar" placeholder="Ej: PBB-9021" (keyup.enter)="buscarVehiculo()">
+      <button class="btn-search" (click)="buscarVehiculo()">
+        <mat-icon>search</mat-icon> Rastrear
+      </button>
+    </div>
+
+    <!-- Mensaje de Error -->
+    <div class="error-msg" *ngIf="mensajeError">
+      <mat-icon>error_outline</mat-icon> {{ mensajeError }}
+    </div>
+
+    <!-- Resultados: Barra de Progreso -->
+    <div class="result-card" *ngIf="trabajoEncontrado">
+      <div class="result-header">
+        <h3>Placa: <strong>{{ trabajoEncontrado.placaVehiculo }}</strong></h3>
+        <span class="badge">{{ trabajoEncontrado.estado | uppercase }}</span>
+      </div>
+      <p class="job-desc">{{ trabajoEncontrado.descripcion }}</p>
+      <p class="date-text"><mat-icon>calendar_today</mat-icon> Entrega estimada: {{ trabajoEncontrado.fechaEntrega | date:'mediumDate' }}</p>
+
+      <div class="progress-container">
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" [style.width.%]="obtenerPorcentajeProgreso(trabajoEncontrado.estado)"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. SECCIÓN SPLIT: NOSOTROS + GALERÍA (ESTILO HIGHLINE) -->
+<section class="about-gallery-section" id="nosotros">
+  <div class="about-content">
+    <h2>¿Buscas lo Mejor para tu Vehículo? Conoce Nuestro Taller de Primera</h2>
+    <div class="accent-line-left"></div>
+    <p class="lead-text">
+      En <strong>Gato Signature Studio</strong>, nos esforzamos por brindarte un servicio excepcional y resultados sorprendentes en cada proyecto de tapicería y restauración interior.
+    </p>
+    <p>
+      Nuestro equipo altamente calificado se dedica a superar tus expectativas. Desde la exquisita tapicería en cuero legítimo hasta la restauración de plásticos y cielos rasos, garantizamos que tu automóvil refleje tu estilo, personalidad y necesidad de confort absoluto.
+    </p>
+    
+    <ul class="benefits-list">
+      <li><mat-icon>check_circle</mat-icon> Materiales de Alta Durabilidad</li>
+      <li><mat-icon>check_circle</mat-icon> Costuras de Precisión</li>
+      <li><mat-icon>check_circle</mat-icon> Garantía de Satisfacción</li>
+      <li><mat-icon>check_circle</mat-icon> Diseños Personalizados</li>
+    </ul>
+  </div>
+
+  <!-- Grilla de fotos (Mostramos solo las últimas 6 para que se vea elegante) -->
+  <div class="gallery-side-grid">
+    <!-- Busca esta línea y ponle slice:0:12 -->
+<div class="grid-img-wrapper" *ngFor="let foto of fotosCatalogo | slice:0:12">
+      <img [src]="foto.url" [alt]="foto.titulo">
+      <div class="img-overlay"><span>{{ foto.titulo }}</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. SECCIÓN DE SERVICIOS -->
+<div class="services-grid">
+    <!-- TARJETA 1 -->
+    <a href="https://wa.me/593980993908?text=Hola,%20quiero%20cotizar%20el%20servicio%20de%20Tapizado%20Automotriz" target="_blank" class="service-card">
+      <div class="icon-wrapper"><mat-icon>directions_car</mat-icon></div>
+      <h3>Tapizado Automotriz</h3>
+      <p>Asientos, puertas y cielo raso con materiales premium y acabados de fábrica.</p>
+    </a>
+
+    <!-- TARJETA 2 -->
+    <a href="https://wa.me/593980993908?text=Hola,%20quiero%20cotizar%20el%20servicio%20de%20Restauración%20Clásica" target="_blank" class="service-card">
+      <div class="icon-wrapper"><mat-icon>build</mat-icon></div>
+      <h3>Restauración Clásica</h3>
+      <p>Devolvemos a la vida el interior de tu auto clásico respetando su estilo original.</p>
+    </a>
+
+    <!-- TARJETA 3 -->
+    <!-- TARJETA 3 -->
+    <a href="https://wa.me/593999999999?text=Hola,%20quiero%20cotizar%20el%20servicio%20de%20Volantes%20Personalizados" target="_blank" class="service-card">
+      
+      <!-- 👇 Cambiamos speed por steering_wheel 👇 -->
+      <div class="icon-wrapper"><mat-icon>album</mat-icon></div>
+      
+      <h3>Volantes Personalizados</h3>
+      <p>Costuras deportivas y forrados ergonómicos en cuero genuino o sintético.</p>
+    </a>
+  </div>

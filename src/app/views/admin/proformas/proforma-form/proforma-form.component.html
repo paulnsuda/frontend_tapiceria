@@ -1,0 +1,124 @@
+<form [formGroup]="proformaForm" class="cotizacion-form">
+  <div class="header-flex">
+    <h2>{{ isEditMode ? 'Editar Proforma' : 'Nueva Proforma' }}</h2>
+    <span class="proforma-number">No. {{ proformaForm.get('numeroProforma')?.value }}</span>
+  </div>
+
+  <!-- DATOS DEL CLIENTE -->
+  <div class="section-card">
+    <h3>Datos del Cliente</h3>
+    <div class="grid-form">
+      <div class="form-group">
+        <label>Nombre / Razón Social *</label>
+        <input type="text" formControlName="clienteNombre" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>C.I. / RUC</label>
+        <input type="text" formControlName="cedulaRuc" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Teléfono</label>
+        <input type="text" formControlName="telefonoContacto" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Dirección</label>
+        <input type="text" formControlName="direccion" class="form-control">
+      </div>
+    </div>
+  </div>
+
+  <!-- DATOS DEL VEHÍCULO -->
+  <div class="section-card">
+    <h3>Especificaciones del Vehículo</h3>
+    <div class="grid-form">
+      <div class="form-group">
+        <label>Marca / Modelo</label>
+        <input type="text" formControlName="vehiculoModelo" placeholder="Ej: HINO" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Año</label>
+        <input type="text" formControlName="vehiculoAno" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Placa</label>
+        <input type="text" formControlName="vehiculoPlaca" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Color</label>
+        <input type="text" formControlName="vehiculoColor" class="form-control">
+      </div>
+    </div>
+  </div>
+
+  <!-- DETALLE DE SERVICIOS (LA TABLA MÁGICA) -->
+  <div class="section-card">
+    <div class="header-flex">
+      <h3>Detalle de Servicios</h3>
+      <button type="button" class="btn-add" (click)="agregarFilaServicio()">+ Agregar Fila</button>
+    </div>
+
+    <table class="services-table">
+      <thead>
+        <tr>
+          <th width="10%">Cant.</th>
+          <th width="50%">Descripción del trabajo</th>
+          <th width="15%">P. Unitario ($)</th>
+          <th width="15%">Total ($)</th>
+          <th width="10%"></th>
+        </tr>
+      </thead>
+      <!-- CONEXIÓN CON EL FORMARRAY -->
+      <tbody formArrayName="detallesServicio">
+        <tr *ngFor="let fila of detallesServicio.controls; let i = index" [formGroupName]="i">
+          <td>
+            <input type="number" formControlName="cantidad" (input)="calcularTotales()" class="form-control text-center">
+          </td>
+          <td>
+            <!-- Le agregamos el list="catalogo" y el evento (change) -->
+            <input type="text" formControlName="descripcion" list="catalogo" (change)="aplicarPrecioCatalogo(i)" placeholder="Escribe o elige un servicio..." class="form-control">
+            
+            <!-- Esta es la lista invisible que te sugiere las opciones -->
+            <datalist id="catalogo">
+              <option *ngFor="let serv of serviciosCatalogo" [value]="serv.nombre"></option>
+            </datalist>
+          </td>
+          <td>
+            <input type="text" formControlName="unitario" (input)="calcularTotales()" placeholder="0.00 o 'Cortesia'" class="form-control text-right">
+          </td>
+          <td class="text-right fw-bold">
+            <!-- Angular calcula y muestra esto bloqueado -->
+            <input type="number" formControlName="total" class="form-control text-right bg-disabled">
+          </td>
+          <td class="text-center">
+            <button type="button" class="btn-delete" (click)="eliminarFilaServicio(i)" *ngIf="detallesServicio.length > 1">
+              <mat-icon style="font-size: 18px; width: 18px; height: 18px;">delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- TOTALES -->
+    <div class="totals-section">
+      <div class="total-row">
+        <span>SUBTOTAL:</span>
+        <span>${{ proformaForm.get('subtotal')?.value | number:'1.2-2' }}</span>
+      </div>
+      <div class="total-row">
+        <span>IVA (0%):</span>
+        <span>$0.00</span>
+      </div>
+      <div class="total-row grand-total">
+        <span>TOTAL A PAGAR:</span>
+        <span>${{ proformaForm.get('precioFinal')?.value | number:'1.2-2' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTONES DE ACCIÓN -->
+  <div class="actions-footer">
+    <button type="button" class="btn-secondary" (click)="cancelar()">Cancelar</button>
+    <button type="button" class="btn-primary" (click)="guardar()" [disabled]="proformaForm.invalid">Guardar Cotización</button>
+    <button type="button" class="btn-pdf" (click)="generarPDF()"><mat-icon>picture_as_pdf</mat-icon> Generar PDF</button>
+  </div>
+</form>

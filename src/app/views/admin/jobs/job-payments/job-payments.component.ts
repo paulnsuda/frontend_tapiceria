@@ -42,36 +42,43 @@ export class JobPaymentsComponent implements OnInit {
   ) {}
 
  ngOnInit() {
-    // 1. Inmediatamente asumimos que debe TODO el dinero al abrir la ventana
-    this.saldoPendiente = Number(this.trabajo.presupuestoTotal);
+    // 1. Usamos costoTotal (así lo renombramos en pasos anteriores)
+    this.saldoPendiente = Number(this.trabajo.costoTotal);
     
     // 2. Luego intentamos buscar si hay abonos
     this.cargarPagos();
   }
+
   cargarPagos() {
     this.paymentsService.getPaymentsByJob(this.trabajo.id).subscribe({
-      next: (pagos) => {
-        this.historialPagos = pagos;
+      next: (res) => {
+        // Tu backend devuelve un objeto con { jobId, totalAbonado, historial }
+        this.historialPagos = res.historial; 
         this.calcularSaldos();
       },
       error: (err) => console.error('Error al cargar historial de pagos', err)
     });
   }
 
-calcularSaldos() {
+  calcularSaldos() {
     this.totalPagado = this.historialPagos.reduce((suma, pago) => suma + Number(pago.monto), 0);
     // Aseguramos que la resta se haga con números puros
-    this.saldoPendiente = Number(this.trabajo.presupuestoTotal) - this.totalPagado;
+    this.saldoPendiente = Number(this.trabajo.costoTotal) - this.totalPagado;
   }
+
   registrarAbono() {
-    if (this.nuevoAbono.monto <= 0 || this.nuevoAbono.monto > this.saldoPendiente) {
+    // 1. Forzamos que el monto capturado se convierta en un número matemático real
+    const montoNumerico = Number(this.nuevoAbono.monto);
+
+    if (montoNumerico <= 0 || montoNumerico > this.saldoPendiente) {
       alert('Monto inválido.');
       return;
     }
 
     const pagoData = {
-      monto: this.nuevoAbono.monto,
-      trabajoId: this.trabajo.id // Enlazamos el dinero con esta orden específica
+      monto: montoNumerico,
+      jobId: Number(this.trabajo.id), // Aseguramos que el ID también sea número
+      tipoPago: montoNumerico === this.saldoPendiente ? 'saldo' : 'anticipo'
     };
 
     this.paymentsService.createPayment(pagoData).subscribe({
@@ -80,7 +87,7 @@ calcularSaldos() {
         this.cargarPagos(); // Recargamos para actualizar las matemáticas en tiempo real
       },
       error: (err) => {
-        console.error(err);
+        console.error('Error detallado del backend:', err);
         alert('Error al registrar el abono en la base de datos.');
       }
     });

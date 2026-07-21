@@ -2,11 +2,11 @@
   <div class="card-header">
     <div>
       <h2 class="card-title">Gestión de Trabajos</h2>
-      <p class="card-subtitle">Control de proformas y estado de las obras</p>
+      <p class="card-subtitle">Control de órdenes, estados de las obras y pagos</p>
     </div>
-   <button mat-flat-button color="primary" class="btn-action" (click)="abrirFormulario()">
-  + Nuevo Trabajo
-</button>
+    <button mat-flat-button color="primary" class="btn-action" (click)="abrirFormulario()">
+      + Nuevo Trabajo
+    </button>
   </div>
   
   <mat-card-content class="table-container">
@@ -19,7 +19,16 @@
 
       <ng-container matColumnDef="cliente">
         <th mat-header-cell *matHeaderCellDef class="table-header"> Cliente </th>
-        <td mat-cell *matCellDef="let trabajo" class="value-cell"> {{trabajo.nombreCliente}} </td>
+        <td mat-cell *matCellDef="let trabajo" class="value-cell"> {{trabajo.clienteNombre}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="placa">
+        <th mat-header-cell *matHeaderCellDef class="table-header"> Vehículo </th>
+        <td mat-cell *matCellDef="let trabajo"> 
+          <span style="background: #f1f5f9; padding: 4px 8px; border-radius: 4px; border: 1px solid #cbd5e1; font-weight: bold; color: #334155;">
+            {{trabajo.placaVehiculo}}
+          </span> 
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="descripcion">
@@ -27,21 +36,23 @@
         <td mat-cell *matCellDef="let trabajo"> {{trabajo.descripcion}} </td>
       </ng-container>
 
-     <ng-container matColumnDef="estado">
+      <ng-container matColumnDef="estado">
         <th mat-header-cell *matHeaderCellDef class="table-header"> Estado </th>
         <td mat-cell *matCellDef="let trabajo"> 
           <span class="badge" [ngClass]="{
-            'badge-pendiente': trabajo.estado === 'pendiente',
-            'badge-progreso': trabajo.estado === 'en_proceso',  'badge-completado': trabajo.estado === 'terminado'  }">
-            {{ trabajo.estado }}
+            'badge-pendiente': trabajo.estado === 'recepcion' || trabajo.estado === 'desarmado',
+            'badge-progreso': trabajo.estado === 'tapizado' || trabajo.estado === 'armado',
+            'badge-completado': trabajo.estado === 'listo' || trabajo.estado === 'entregado'
+          }">
+            {{ trabajo.estado | uppercase }}
           </span>
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="presupuesto">
-        <th mat-header-cell *matHeaderCellDef class="table-header table-right"> Presupuesto </th>
+      <ng-container matColumnDef="costo">
+        <th mat-header-cell *matHeaderCellDef class="table-header table-right"> Costo Total </th>
         <td mat-cell *matCellDef="let trabajo" class="table-right value-cell"> 
-          {{ trabajo.presupuestoTotal | currency }} 
+          {{ trabajo.costoTotal | currency }} 
         </td>
       </ng-container>
 
@@ -57,21 +68,20 @@
             <span class="material-icons">edit</span>
           </button>
 
-          <button mat-icon-button style="color: #ef4444;" (click)="eliminarTrabajo(trabajo.id, trabajo.nombreCliente); $event.stopPropagation()">
+          <button mat-icon-button style="color: #ef4444;" (click)="eliminarTrabajo(trabajo.id, trabajo.clienteNombre); $event.stopPropagation()">
             <span class="material-icons">delete</span>
           </button>
           
         </td>
       </ng-container>
       
-
       <tr mat-header-row *matHeaderRowDef="columnasAMostrar"></tr>
       <tr mat-row *matRowDef="let row; columns: columnasAMostrar;" class="table-row-hover"></tr>
       
     </table>
     
     <div *ngIf="listaTrabajos.length === 0" class="mensaje-vacio">
-      <p>No hay trabajos activos. Haz clic en "Nuevo Trabajo" para crear la primera proforma.</p>
+      <p>No hay trabajos activos. Haz clic en "Nuevo Trabajo" para crear la primera orden.</p>
     </div>
   </mat-card-content>
 </mat-card>

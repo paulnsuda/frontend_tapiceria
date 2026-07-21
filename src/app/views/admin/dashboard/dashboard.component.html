@@ -1,12 +1,22 @@
-<!-- Barra de Navegación Superior -->
-<mat-toolbar color="primary" class="navbar-corporativa">
-  <span class="logo-text">GATO SIGNATURE STUDIO</span>
+<mat-toolbar class="navbar-corporativa">
+  <div class="brand-container">
+    <!-- Usamos un icono de auto en lugar de la imagen rota por ahora -->
+    <img src="/logo_tapiceria.png" alt="Logo Tapicería El Gato" class="brand-logo">
+    <span class="logo-text">TAPICERÍA EL GATO</span>
+  </div>
+  
   <span class="spacer"></span>
-  <span class="user-greeting">Hola, Administrador</span>
-  <button mat-button class="btn-logout">Cerrar Sesión</button>
+  
+  <div class="user-actions">
+    <span class="user-greeting">Hola, Administrador</span>
+    <button mat-button class="btn-logout" (click)="cerrarSesion()">
+      <mat-icon>logout</mat-icon> Cerrar Sesión
+    </button>
+  </div>
 </mat-toolbar>
 
-<!-- Contenedor Principal con fondo gris -->
+<!-- ... El resto queda igual ... -->
+
 <div class="dashboard-layout">
   
   <div class="header-section">
@@ -14,49 +24,65 @@
     <p class="page-subtitle">Monitorea tus ingresos, trabajos y existencias en tiempo real.</p>
   </div>
 
-  <!-- Tarjetas de Resumen (KPIs) -->
   <div class="kpi-grid">
     <mat-card class="kpi-card">
       <mat-card-content>
         <p class="kpi-title">Trabajos Activos</p>
-        <h2 class="kpi-value">12</h2>
+        <!-- 👇 Usamos la variable real de Angular -->
+        <h2 class="kpi-value">{{ trabajosActivos }}</h2>
       </mat-card-content>
     </mat-card>
 
     <mat-card class="kpi-card">
       <mat-card-content>
-        <p class="kpi-title">Ingresos del Mes</p>
-        <h2 class="kpi-value positive">$ 3,450.00</h2>
+        <p class="kpi-title">Ingresos Proyectados</p>
+        <!-- 👇 Ponemos la variable y usamos el formato de moneda automático de Angular -->
+        <h2 class="kpi-value positive">{{ ingresosTotales | currency:'USD' }}</h2>
       </mat-card-content>
     </mat-card>
 
     <mat-card class="kpi-card">
       <mat-card-content>
         <p class="kpi-title">Materiales Bajos en Stock</p>
-        <h2 class="kpi-value warning">3</h2>
+        <!-- 👇 Mostramos cuántos materiales tienen menos de 5 unidades -->
+        <h2 class="kpi-value warning">{{ materialesBajos }}</h2>
       </mat-card-content>
     </mat-card>
   </div>
 
-  <!-- Contenedor de Pestañas (Tabs) -->
   <div class="module-section">
     <mat-tab-group animationDuration="500ms" class="custom-tabs">
       
-      <!-- Pestaña 1: Trabajos (Proformas) -->
       <mat-tab label="Gestión de Trabajos">
         <div class="tab-content">
           <app-jobs></app-jobs>
         </div>
       </mat-tab>
 
-      <!-- Pestaña 2: Inventario -->
       <mat-tab label="Inventario de Materiales">
         <div class="tab-content">
           <app-materials></app-materials>
         </div>
       </mat-tab>
 
+      <mat-tab label="Cotizaciones (Proformas)">
+        <div class="tab-content">
+          <!-- 👇 Le decimos al Dashboard que escuche la señal y vuelva a calcular todo -->
+          <app-proformas (notificarCambio)="cargarMetricasReales()"></app-proformas>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Catálogo">
+      <app-gallery></app-gallery>
+    </mat-tab>
+
+   <mat-tab label="Precios Fijos">
+        <div class="tab-content">
+          <app-catalogo-precios></app-catalogo-precios>
+        </div>
+      </mat-tab>
+      <!-- 👆 HASTA AQUÍ 👆 -->
+
     </mat-tab-group>
   </div>
-
 </div>

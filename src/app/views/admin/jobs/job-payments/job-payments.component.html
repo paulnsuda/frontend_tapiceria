@@ -1,11 +1,11 @@
-<h2 mat-dialog-title>Estado de Cuenta: <strong>{{ trabajo.nombreCliente }}</strong></h2>
+<h2 mat-dialog-title>Estado de Cuenta: <strong>{{ trabajo.clienteNombre }}</strong></h2>
 
 <mat-dialog-content class="payments-container">
   
   <div class="financial-summary">
    <div class="summary-box budget">
       <span>Costo Total</span> 
-      <h3>{{ trabajo.presupuestoTotal | currency }}</h3>
+      <h3>{{ trabajo.costoTotal | currency }}</h3>
     </div>
     <div class="summary-box paid">
       <span>Total Abonado</span>
@@ -44,7 +44,7 @@
     
     <ng-container matColumnDef="fecha">
       <th mat-header-cell *matHeaderCellDef> Fecha </th>
-      <td mat-cell *matCellDef="let pago"> {{ pago.fechaCreacion | date:'mediumDate' }} </td>
+      <td mat-cell *matCellDef="let pago"> {{ pago.fechaPago | date:'mediumDate' }} </td>
     </ng-container>
 
     <ng-container matColumnDef="monto">

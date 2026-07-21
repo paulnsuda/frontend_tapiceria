@@ -28,13 +28,15 @@ import { JobsService } from '../../../../services/jobs.service';
   styleUrl: './job-form.component.css'
 })
 export class JobFormComponent implements OnInit {
-  nuevoTrabajo = {
-    nombreCliente: '',
-    descripcion: '',
-    presupuestoTotal: 0,
-    estado: 'pendiente',
-    fechaEntrega: ''
-  };
+ 
+ nuevoTrabajo: any = {
+  clienteNombre: '',
+  placaVehiculo: '',
+  descripcion: '',
+  costoTotal: null,
+  estado: 'recepcion',
+  fechaEntrega: ''
+};
 
   esEdicion = false;
 
@@ -52,26 +54,30 @@ export class JobFormComponent implements OnInit {
   }
 
   guardar() {
+    // 1. Extraemos SOLO los datos escalares para evitar que TypeORM colapse con las relaciones
+    const datosLimpios = {
+      clienteNombre: this.nuevoTrabajo.clienteNombre,
+      placaVehiculo: this.nuevoTrabajo.placaVehiculo,
+      descripcion: this.nuevoTrabajo.descripcion,
+      costoTotal: Number(this.nuevoTrabajo.costoTotal), // Aseguramos que sea número
+      estado: this.nuevoTrabajo.estado,
+      fechaEntrega: this.nuevoTrabajo.fechaEntrega
+    };
+
     if (this.esEdicion) {
-      this.jobsService.updateJob(this.data.id, this.nuevoTrabajo).subscribe({
-        next: () => {
-          alert('Orden de trabajo actualizada con éxito');
-          this.dialogRef.close(true);
-        },
+      this.jobsService.updateJob(this.nuevoTrabajo.id, datosLimpios).subscribe({
+        next: () => this.dialogRef.close(true),
         error: (err) => {
           console.error(err);
           alert('Error al actualizar la orden');
         }
       });
     } else {
-      this.jobsService.createJob(this.nuevoTrabajo).subscribe({
-        next: () => {
-          alert('Orden de trabajo creada exitosamente');
-          this.dialogRef.close(true);
-        },
+      this.jobsService.createJob(datosLimpios).subscribe({
+        next: () => this.dialogRef.close(true),
         error: (err) => {
           console.error(err);
-          alert('No se pudo crear la orden de trabajo');
+          alert('Error al crear la orden');
         }
       });
     }

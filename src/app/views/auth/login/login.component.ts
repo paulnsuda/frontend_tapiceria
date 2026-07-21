@@ -5,7 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { Router } from '@angular/router'; // <-- 1. Importar el Router
+import { Router } from '@angular/router'; 
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
@@ -26,19 +26,21 @@ export class LoginComponent {
   email = '';
   password = '';
 
-  // 2. Inyectar el Router aquí junto al servicio
   constructor(private authService: AuthService, private router: Router) {}
 
   onLogin() {
     this.authService.login(this.email, this.password).subscribe({
       next: (respuesta) => {
-        // Guardamos la llave
-        localStorage.setItem('token', respuesta.access_token);
+        // 👇 AQUÍ ESTÁ LA MAGIA: Lo guardamos exactamente como 'token' para que el Guardián lo reconozca
+        // (Usamos respuesta.access_token o respuesta.token dependiendo de cómo lo envíe tu backend)
+        const tokenRecibido = respuesta.access_token || respuesta.token;
+        localStorage.setItem('token', tokenRecibido);
         
-        // 3. ¡Viajamos al panel de control automáticamente!
+        // ¡Viajamos al panel de control automáticamente!
         this.router.navigate(['/admin']); 
       },
       error: (err) => {
+        console.error(err);
         alert('El correo o la contraseña son incorrectos.');
       }
     });

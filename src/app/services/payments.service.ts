@@ -5,13 +5,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class PaymentsService {
-  // Ruta hacia el backend de pagos (ajustaremos si tu backend usa otro nombre)
-  private apiUrl = 'http://localhost:3000/pagos'; 
+  // Ajustado al nombre exacto de tu controlador en NestJS
+  private apiUrl = 'http://localhost:3000/payments'; 
 
   constructor(private http: HttpClient) { }
 
   private getHeaders() {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('access_token');
     return new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
@@ -19,7 +19,8 @@ export class PaymentsService {
 
   // Traer todos los abonos de un trabajo en específico
   getPaymentsByJob(jobId: number) {
-    return this.http.get<any[]>(`${this.apiUrl}/trabajo/${jobId}`, { headers: this.getHeaders() });
+    // Ajustado al endpoint exacto de tu controlador
+    return this.http.get<any>(`${this.apiUrl}/job/${jobId}`, { headers: this.getHeaders() });
   }
 
   // Registrar un nuevo abono
