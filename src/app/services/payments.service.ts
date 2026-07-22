@@ -12,8 +12,9 @@ export class PaymentsService {
 
   constructor(private http: HttpClient) { }
 
-  private getHeaders() {
-    const token = localStorage.getItem('access_token');
+ private getHeaders() {
+    // ¡Aquí estaba el detalle! Cambiamos 'access_token' por 'token'
+    const token = localStorage.getItem('token');
     return new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
