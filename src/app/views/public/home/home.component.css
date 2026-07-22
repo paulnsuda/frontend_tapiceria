@@ -385,10 +385,70 @@ a.service-card {
 .whatsapp-float img { width: 35px; height: 35px; }
 
 /* --- RESPONSIVIDAD (Celulares) --- */
+/* --- RESPONSIVIDAD PROFESIONAL (Celulares y Tablets) --- */
 @media (max-width: 900px) {
-  .about-gallery-section { grid-template-columns: 1fr; }
-  .nav-links { display: none; } /* Oculta links en celular para limpieza */
-  .hero-content h1 { font-size: 2.5rem; }
+  /* 1. Navbar y Hero (Evitamos que el texto choque con el logo) */
+  .navbar {
+    padding: 15px 20px; /* Menos espacio a los lados */
+  }
+  .nav-links { 
+    display: none; /* Ocultamos el menú para limpieza visual */
+  }
+  .hero-content {
+    margin-top: 100px; /* Empujamos el texto hacia abajo del logo */
+    text-align: center;
+  }
+  .hero-content h1 { 
+    font-size: 2.2rem; /* Letra un poco más pequeña */
+    line-height: 1.3;  /* Separación perfecta entre renglones */
+  }
+
+  /* 2. Rastreador (Evitamos que el botón se salga) */
+  .tracker-container {
+    padding: 30px 20px; /* Menos padding interno */
+    margin: -40px 15px 40px; /* Dejamos un margen lateral para que no toque la orilla del teléfono */
+  }
+  .tracker-container h2 {
+    font-size: 1.6rem;
+    line-height: 1.4; /* Desaplastamos las letras */
+  }
+  .search-box {
+    flex-direction: column; /* ¡LA CLAVE! Ponemos el botón debajo de la cajita */
+    gap: 10px;
+  }
+  .search-box input {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    box-sizing: border-box; 
+  }
+  .btn-search {
+    width: 100%; /* Botón grande y fácil de tocar con el pulgar */
+    justify-content: center;
+    padding: 15px;
+  }
+
+  /* 3. Títulos de la sección Nosotros */
+  .about-content h2 {
+    font-size: 1.6rem;
+    line-height: 1.4;
+  }
+  .about-gallery-section { 
+    padding: 40px 15px;
+  }
+
+  /* 4. Galería: Pasamos de 4 columnas a 2 en celular para que se aprecie el detalle */
+  .gallery-side-grid {
+    grid-template-columns: repeat(2, 1fr) !important; 
+    gap: 10px;
+  }
+  .grid-img-wrapper {
+    height: 150px; /* Altura ideal para 2 columnas en móvil */
+  }
+
+  /* 5. Servicios: Aseguramos una sola columna centrada */
+  .services-grid {
+    grid-template-columns: 1fr;
+    padding: 20px 15px;
+  }
 }
 
 .gallery-side-grid {
