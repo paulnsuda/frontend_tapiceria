@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000',
+  apiUrl: 'https://backtapiceria-production.up.railway.app',
   cloudinaryName: 'qkaong60',
   cloudinaryPreset: 'tapiceria_fotos'
 };
