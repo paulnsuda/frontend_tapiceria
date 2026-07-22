@@ -60,7 +60,7 @@
     <table class="services-table">
       <thead>
         <tr>
-          <th width="10%">Cant.</th>
+          <th style="width: 15%; min-width: 80px;">Cant.</th>
           <th width="50%">Descripción del trabajo</th>
           <th width="15%">P. Unitario ($)</th>
           <th width="15%">Total ($)</th>
@@ -71,7 +71,7 @@
       <tbody formArrayName="detallesServicio">
         <tr *ngFor="let fila of detallesServicio.controls; let i = index" [formGroupName]="i">
           <td>
-            <input type="number" formControlName="cantidad" (input)="calcularTotales()" class="form-control text-center">
+           <input type="number" formControlName="cantidad" (keyup)="calcularTotales()" (change)="calcularTotales()" class="form-control text-center">
           </td>
           <td>
             <!-- Le agregamos el list="catalogo" y el evento (change) -->
@@ -83,7 +83,7 @@
             </datalist>
           </td>
           <td>
-            <input type="text" formControlName="unitario" (input)="calcularTotales()" placeholder="0.00 o 'Cortesia'" class="form-control text-right">
+           <input type="text" formControlName="unitario" (keyup)="calcularTotales()" (change)="calcularTotales()" placeholder="0.00 o 'Cortesia'" class="form-control text-right">
           </td>
           <td class="text-right fw-bold">
             <!-- Angular calcula y muestra esto bloqueado -->

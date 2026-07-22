@@ -156,22 +156,28 @@ cargarCatalogo(): void {
     }
   }
 
-  // Magia matemática
- calcularTotales(): void {
+ 
+  calcularTotales(): void {
+    console.log('🔄 Ejecutando calculadora...'); // <-- El chismoso
     let sumaSubtotal = 0;
 
-    // EL SECRETO: getRawValue() extrae TODOS los datos de la tabla,
-    // incluso los que están en cajitas bloqueadas (disabled).
-    const filasCrudas = this.detallesServicio.getRawValue();
+    this.detallesServicio.controls.forEach((fila, index) => {
+      const cantidad = parseFloat(fila.get('cantidad')?.value) || 0;
+      const unitario = parseFloat(fila.get('unitario')?.value) || 0;
+      
+      const totalFila = cantidad * unitario;
+      
+      // Esto te mostrará en la consola exactamente qué está multiplicando
+      console.log(`Fila ${index + 1}: ${cantidad} x ${unitario} = ${totalFila}`);
 
-    // Sumamos los totales de cada fila
-    filasCrudas.forEach((fila: any) => {
-      // Nos aseguramos de convertirlo a número matemático por si acaso
-      const totalFila = parseFloat(fila.total) || 0; 
+      // Inyectamos el valor a la cajita "Total" de forma segura
+      fila.patchValue({ total: totalFila }, { emitEvent: false });
+      
       sumaSubtotal += totalFila;
     });
 
-    // Repartimos el dinero a todas las variables
+    console.log('💰 Subtotal final calculado:', sumaSubtotal);
+
     this.proformaForm.patchValue({
       subtotal: sumaSubtotal,
       precioFinal: sumaSubtotal,
