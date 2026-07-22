@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+// 1. Importamos el environment
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class JobsService {
-  private apiUrl = 'http://localhost:3000/jobs'; // Ruta hacia el backend de trabajos
+  // 2. Usamos tu variable dinámica para la ruta principal de trabajos
+  private apiUrl = `${environment.apiUrl}/jobs`; 
 
   constructor(private http: HttpClient) { }
 
@@ -52,12 +55,12 @@ export class JobsService {
       materialId: materialId,
       cantidadUsada: cantidadUsada
     }, { headers: this.getHeaders() });
-
   }
 
-// Rastreo público por placa
+  // Rastreo público por placa
   trackJobByPlaca(placa: string) {
-    return this.http.get<any>(`http://localhost:3000/track/${placa}`);
+    // 3. ¡OJO AQUÍ! Cambiamos la ruta quemada de localhost por el environment
+    return this.http.get<any>(`${environment.apiUrl}/track/${placa}`);
   }
 
 }

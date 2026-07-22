@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+// 1. Importamos el environment
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MaterialsService {
-  private apiUrl = 'http://localhost:3000/materials'; // La ruta de tu backend
+  // 2. Usamos tu variable dinámica para armar la ruta
+  private apiUrl = `${environment.apiUrl}/materials`;
 
   constructor(private http: HttpClient) { }
 
@@ -23,16 +26,15 @@ export class MaterialsService {
   }
 
   createMaterial(material: any) {
-  return this.http.post<any>(this.apiUrl, material, { headers: this.getHeaders() });
-}
+    return this.http.post<any>(this.apiUrl, material, { headers: this.getHeaders() });
+  }
 
-deleteMaterial(id: number) {
-  return this.http.delete<any>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
-}
+  deleteMaterial(id: number) {
+    return this.http.delete<any>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+  }
 
-// Al final de la clase MaterialsService
-updateMaterial(id: number, material: any) {
-  return this.http.patch<any>(`${this.apiUrl}/${id}`, material, { headers: this.getHeaders() });
-}
-
+  // Al final de la clase MaterialsService
+  updateMaterial(id: number, material: any) {
+    return this.http.patch<any>(`${this.apiUrl}/${id}`, material, { headers: this.getHeaders() });
+  }
 }

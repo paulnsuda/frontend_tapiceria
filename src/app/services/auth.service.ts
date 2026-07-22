@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+// 1. Importamos el environment
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  // La ruta exacta de tu backend que probamos en Postman
-  private apiUrl = 'http://localhost:3000/auth'; 
+  // 2. Usamos tu variable dinámica para la ruta de autenticación
+  private apiUrl = `${environment.apiUrl}/auth`; 
 
   constructor(private http: HttpClient) { }
 

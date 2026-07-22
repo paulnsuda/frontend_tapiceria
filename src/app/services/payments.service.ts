@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+// 1. Importamos el environment
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PaymentsService {
-  // Ajustado al nombre exacto de tu controlador en NestJS
-  private apiUrl = 'http://localhost:3000/payments'; 
+  // 2. Usamos tu variable dinámica para armar la ruta
+  private apiUrl = `${environment.apiUrl}/payments`; 
 
   constructor(private http: HttpClient) { }
 

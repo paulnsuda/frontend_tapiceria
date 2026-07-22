@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+// 1. Importamos el environment (asegúrate de que la ruta coincida con la de tus carpetas)
+import { environment } from '../../environments/environment';
 
 // Esta es la estructura de tus precios base
 export interface ServicioBase {
@@ -15,8 +17,8 @@ export interface ServicioBase {
   providedIn: 'root'
 })
 export class ServiciosBaseService {
-  // Asegúrate de que esta URL sea la misma que usas en tus otros servicios (ej. proformas.service.ts)
-  private apiUrl = 'http://localhost:3000/servicios-base'; 
+  // 2. Reemplazamos el localhost por tu variable dinámica
+  private apiUrl = `${environment.apiUrl}/servicios-base`; 
 
   constructor(private http: HttpClient) {}
 

@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+// 1. Importamos el environment
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GalleryService {
-  private apiUrl = 'http://localhost:3000/gallery';
+  // 2. Usamos tu variable dinámica
+  private apiUrl = `${environment.apiUrl}/gallery`;
 
   constructor(private http: HttpClient) { }
 

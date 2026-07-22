@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+// 1. Importamos el environment
+import { environment } from '../../environments/environment';
 
 // ¡Aquí estamos exportando 'Proforma' para que el componente la encuentre!
 export interface Proforma {
@@ -31,7 +33,8 @@ export interface Proforma {
   providedIn: 'root'
 })
 export class ProformasService {
-  private apiUrl = 'http://localhost:3000/proformas';
+  // 2. Usamos tu variable dinámica para armar la ruta
+  private apiUrl = `${environment.apiUrl}/proformas`;
 
   constructor(private http: HttpClient) { }
 
